@@ -12,13 +12,20 @@ use Staudenmeir\LaravelCte\Query\SingleStoreBuilder;
 trait CompilesExpressions
 {
     /**
+     * 
+     * Note: In Laravel 10+, the base query grammars do not define a constructor,
+     * so we must NOT call parent::__construct() here (PHP 8.2 would throw
+     * "Cannot call constructor"). We still accept the Connection instance
+     * for backwards compatibility but ignore it.
+     *
      * Create a new grammar instance.
      *
      * @param \Illuminate\Database\Connection $connection
      */
     public function __construct(Connection $connection)
     {
-        parent::__construct($connection);
+        // parent::__construct($connection);
+        // Do not call parent::__construct($connection); the base grammar has no constructor.
 
         array_unshift($this->selectComponents, 'expressions');
 
